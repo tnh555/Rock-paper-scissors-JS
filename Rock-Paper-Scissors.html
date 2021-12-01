@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissor Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Cabin', sans-serif;
+            font-size: 1.5em;
+            height: 100%;
+        }
+
+
+
+        #board {
+            position: relative;
+            border: black 1px solid;
+            background: rgb(117, 255, 158);
+            width: 25em;
+            height: fit-content;
+            padding: 2em;
+            margin: auto;
+        }
+
+        h1 {
+            color: rgb(0, 0, 0);
+        }
+
+        h1:nth-of-type(2) {
+            margin-top: 2em;
+        }
+
+        .margin {
+            margin: 1em;
+        }
+
+        #player1Hand,
+        #player1Dice {
+            color: rgb(0, 144, 201);
+        }
+
+        #player2Hand,
+        #player2Dice {
+            color: rgb(255, 32, 32);
+        }
+
+        .flex {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        button {
+            background: gold;
+            width: 8em;
+            height: 3em;
+            border-radius: 5px;
+            box-shadow: none;
+            margin-top: 2em;
+
+        }
+
+        img {
+            position: absolute;
+            transform: rotateZ(45deg);
+            right: 5%;
+            top: 15%
+        }
+
+        img:nth-of-type(2) {
+            top: 57.5%;
+            right: 0%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="board">
+        <img src="RockPaperScissors.png" alt="hands">
+        <h1>Rock Paper Scissor Game</h1>
+        <p class="margin">Player One has: <span id="player1Hand"></span></p>
+        <p class="margin">Player Two has: <span id="player2Hand"></span></p>
+        <p class="margin">The winner is: <span id="winner"></span></p>
+        <p class="margin">How many times since last tie: <span id="tie"></span></p>
+        <div class="flex"><button onclick="startRPS()">Play game!</button></div>
+
+        <h1>Dice Rolling Game</h1>
+        <img src="dices.png" alt="dices">
+        <p class="margin">Player One has: <span id="player1Dice"></span></p>
+        <p class="margin">Player Two has: <span id="player2Dice"></span></p>
+        <p class="margin">The winner is: <span id="winnerDice"></span></p>
+        <p class="margin">How many times Player One won: <span id="p1Won">0</span></p>
+        <p class="margin">How many times Player two won: <span id="p2Won">0</span></p>
+        <p class="margin">How many times it tied: <span id="tieWon">0</span></p>
+        <div class="flex"><button onclick="startDice()">Play game!</button></div>
+
+
+    </div>
+
+
+
+    <script>
+        let player1Hand = document.querySelector('#player1Hand');
+        let player2Hand = document.querySelector('#player2Hand');
+        let winner = document.querySelector('#winner');
+        let tieCounter = document.querySelector('#tie')
+        let tied = 0;
+
+        function startRPS() {
+            let player1 = Math.floor(Math.random() * 3);
+            let player2 = Math.floor(Math.random() * 3);
+
+            if (player1 == 1) {
+                player1Hand.innerText = "Scissor"
+
+            }
+            else if (player1 == 2) {
+                player1Hand.innerText = "Paper"
+            }
+            else {
+                player1Hand.innerText = "Rock"
+            }
+
+
+            if (player2 == 1) {
+                player2Hand.innerText = "Scissor"
+            }
+            else if (player2 == 2) {
+                player2Hand.innerText = "Paper"
+            }
+            else {
+                player2Hand.innerText = "Rock"
+            }
+
+            if ((player1 == 1 && player2 == 2) || (player1 == 2 && player2 == 0) || (player1 == 0 && player2 == 1)) {
+                winner.innerText = "Player One!";
+                document.querySelector('#winner').style.color = "rgb(0, 144, 201)";
+                document.querySelector('#winner').style.borderBottom = "double 5px";
+                tied++;
+                tieCounter.innerText = tied;
+
+
+
+
+            }
+            else if ((player2 == 1 && player1 == 2) || (player2 == 2 && player1 == 0) || (player2 == 0 && player1 == 1)) {
+                winner.innerText = "Player Two!";
+                document.querySelector('#winner').style.color = "rgb(255, 32, 32)";
+                document.querySelector('#winner').style.borderBottom = "double 5px";
+                tied++
+                tieCounter.innerText = tied;
+
+            }
+            else {
+                winner.innerText = "It's a tie!"
+                document.querySelector('#winner').style.color = "rgb(163, 0, 155)";
+                document.querySelector('#winner').style.borderBottom = "none";
+                tied = 0;
+                tieCounter.innerText = tied;
+
+            }
+        }
+
+        let p1 = document.querySelector("#p1Won")
+        let p2 = document.querySelector("#p2Won")
+        let tie = document.querySelector("#tieWon")
+        let p1Won = 0
+        let p2Won = 0
+        let tieWon = 0
+
+        function startDice() {
+            /* while (p1Won < 100000 && p2Won < 100000 && tieWon < 100000) { */
+                let player1Dice = Math.floor(Math.random() * 6) + 1
+                let player2Dice = Math.floor(Math.random() * 6) + 1
+
+                document.querySelector("#player1Dice").innerText = player1Dice
+                document.querySelector("#player2Dice").innerText = player2Dice
+
+
+                if (player1Dice > player2Dice) {
+                    document.querySelector("#winnerDice").innerText = "Player One!"
+                    document.querySelector('#winnerDice').style.color = "rgb(0, 144, 201)";
+                    document.querySelector('#winnerDice').style.borderBottom = "double 5px";
+                    p1Won++;
+                    p1.innerText = p1Won;
+                }
+                else if (player2Dice > player1Dice) {
+                    document.querySelector("#winnerDice").innerText = "Player Two!"
+                    document.querySelector('#winnerDice').style.color = "rgb(255, 32, 32)";
+                    document.querySelector('#winnerDice').style.borderBottom = "double 5px";
+                    p2Won++;
+                    p2.innerText = p2Won;
+                }
+                else {
+                    document.querySelector("#winnerDice").innerText = "It's a tie!"
+                    document.querySelector('#winnerDice').style.color = "rgb(163, 0, 155)";
+                    document.querySelector('#winnerDice').style.borderBottom = "none";
+                    tieWon++;
+                    tie.innerText = tieWon;
+                }
+            /* } */
+        }
+
+
+    </script>
+</body>
+
+</html>
